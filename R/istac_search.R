@@ -1,3 +1,6 @@
+
+# prueba git
+
 istac_search <- function(pattern, fields = "title", extra = TRUE, cache){
 
   if (missing(cache)) cache <- istacr::cache
