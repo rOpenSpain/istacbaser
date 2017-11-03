@@ -17,7 +17,8 @@ columna <- apply(pruebas[,1:4],2,substr,1,3) %>%
   setNames(paste0("v",1:4)) %>%
   group_by(v1,v2,v3,v4) %>%
   mutate(id = row_number()) %>%
-  apply(1,paste,collapse=".")
+  apply(1,paste,collapse=".") %>%
+  tolower()
 
 pruebas$namecode <- columna
 

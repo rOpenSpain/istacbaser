@@ -32,7 +32,7 @@ istac <- function(istac_table, islas = "all", label = FALSE, startdate, enddate,
     else
       warning("The data is no time dependence.")
 
-
+if(label) code2labs
 
   }
 
