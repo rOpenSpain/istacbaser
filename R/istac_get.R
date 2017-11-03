@@ -4,7 +4,7 @@ istac_get <- function(indicador){
 
   url.datos <- tabla$`API JSON`
 
-  datos_lista <- fromJSON(readLines(url.datos,
+  datos_lista <- jsonlite::fromJSON(readLines(url.datos,
                                     warn = FALSE,
                                     encoding = "UTF-8"), simplifyDataFrame = TRUE)
 

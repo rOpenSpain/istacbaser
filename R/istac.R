@@ -1,7 +1,7 @@
-istac <- function( islas = "all", istac_table, label = FALSE, startdate, enddate, freq, mrv, POSIXct = FALSE, cache){
+istac <- function(istac_table, islas = "all", label = FALSE, startdate, enddate, freq, mrv, POSIXct = FALSE, cache){
 
 
-  # if (missing(cache)) cache <- cache
+  if (missing(cache)) cache <- istacr::cache
 
   # check table ----------
 
@@ -20,18 +20,34 @@ istac <- function( islas = "all", istac_table, label = FALSE, startdate, enddate
 
 
 
-  if (POSIXct & any(c("Años","Peridos") %in% names(out_df))) out_df <- istacperiodos2POSIXct(out_df, "Años")  else  warning("The data is no time dependence.")
+  if (!POSIXct)
+    out_df
+  else {
+
+    date_index <- names(out_df) %in% c("A\u00F1os","Per\u00EDodo")
+    vble_date <- names(out_df)[date_index]
+
+    if(any(date_index))
+      out_df <- istacperiodos2POSIXct(out_df, vble_date)
+    else
+      warning("The data is no time dependence.")
+
+
+
+  }
+
 
 
   # check dates ----------
-  if (POSIXct & (!missing(startdate) | ! missing(enddate))) stop("stardate and endate are possible only with POSIXct = TRUE")
-  if (missing(startdate) != missing(enddate)) stop("Using either startdate or enddate requries supplying both. Please provide both if a date range is wanted")
 
+  #if (POSIXct & (!missing(startdate) | ! missing(enddate))) stop("stardate and endate are possible only with POSIXct = TRUE")
+  #if (missing(startdate) != missing(enddate))
+  #  stop("Using either startdate or enddate requries supplying both. Please provide both if a date range is wanted")
+  #else
   # Falta comprobar si stardate y endate están en formato correcto
-
-  out_df <- out_df[out_df$date_ct >= as.Date(stardate, "%d-%m-%Y") & out_df$date_ct <= as.Date(enddate, "%d-%m-%Y"), ]
-
+  #   out_df <- out_df[out_df$date_ct >= as.Date(stardate, "%d-%m-%Y") & out_df$date_ct <= as.Date(enddate, "%d-%m-%Y"), ]
 
 
 
+  out_df
 }

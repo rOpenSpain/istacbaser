@@ -1,6 +1,6 @@
 istac_search <- function(pattern, fields = "title", extra = TRUE, cache){
 
-  # if (missing(cache)) cache <- cache
+  if (missing(cache)) cache <- istacr::cache
 
 
   match_index <- sort(unique(unlist(sapply(fields, FUN = function(i)
