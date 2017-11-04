@@ -2,8 +2,8 @@
 #'
 #' This function downloads the requested information using the ISTAC API.
 #'
-#' @param istac_table Character string with the ID code of the table requested.
-#' This ID code corresponds to the \code{namecode} column from \code{\link{cache}}.
+#' @param istac_table Character string with the namecode of the table requested.
+#' This namecode corresponds to the \code{namecode} column from \code{\link{cache}}.
 #' @param islas Character vector of islands codes requested. Default value is special code of \code{all}.
 #' @param label if \code{FALSE}, the data frame returned has the codes used in ISTAC API,
 #' if \code{TRUE}, the data frame returned has the labels used in ISTAC API. Default value is \code{FALSE}.
@@ -14,6 +14,8 @@
 #' @param enddate Numeric or character. If numeric it must be in \%Y form (i.e. four digit year).
 #' For data at the subannual granularity the API supports a format as follows: for monthly data, "2016M01"
 #' and for quarterly data, "2016Q1".
+#' @param freq Character String. For fetching quarterly ("Q"), monthly("M") or yearly ("Y") values.
+#'  Currently works along with \code{mrv}.
 #' @param mrv Numeric. The number of Most Recent Values to return. A replacement of \code{startdate} and \code{enddate},
 #' this number represents the number of observations you which to return starting from the most recent date of collection.
 #' Useful in conjuction with \code{freq}.
