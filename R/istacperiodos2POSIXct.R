@@ -18,10 +18,10 @@ istacperiodos2POSIXct <- function(df, date_col) {
     df$fecha <- as.Date.POSIXct(NA)
     df$periodicidad <- NA
 
-    date_vec <- df[ , date_col]
+    date_vec <- df[ ,date_col]
 
     # annual ----------
-    annual_obs_index <- grep("[M|Q|D]", date_vec, invert = TRUE)
+    annual_obs_index <- grep("[M|Q|W]", date_vec, invert = TRUE)
 
     if (length(annual_obs_index) > 0) {
 
@@ -31,6 +31,45 @@ istacperiodos2POSIXct <- function(df, date_col) {
       df$fecha[annual_obs_index] <- annual_posix_values
       df$periodicidad[annual_obs_index] <- "anual"
 
+    }
+
+    # Biannual ----------
+    # Monthly -----------
+
+    M_obs_index <- grep("M", date_vec)
+
+    if (length(M_obs_index) > 0) {
+      unique_Mobs <- unique(date_vec[M_obs_index])
+      obs <- strsplit(as.character(unique_Mobs), "M")
+      date_df <- as.data.frame(matrix(unlist(obs), ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+
+      if (abs(as.numeric(date_df[1,2])-as.numeric(date_df[2,2])) == 6){
+        # Biannual
+        sem_obs <- strsplit(as.character(date_vec[M_obs_index]), "M")
+        sem_df <- as.data.frame(matrix(unlist(sem_obs), ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+        names(sem_df) <- c("year", "month_sem")
+        #sem_df$semester <-ifelse(sem_df$month_sem == "06",1,2)
+        sem_format_vec <- paste0(sem_df$year, "01", sem_df$month_sem)
+
+        sem_posix <- lubridate::ydm(sem_format_vec)
+
+
+        df$fecha[M_obs_index] <- sem_posix
+        df$periodicidad[M_obs_index] <- "semestral"
+
+
+      } else {
+        # Monthly
+        m_obs <- strsplit(as.character(date_vec[M_obs_index]), "M")
+        m_df <- as.data.frame(matrix(unlist(m_obs), ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+        names(m_df) <- c("year", "month")
+        m_format_vec <- paste0(m_df$year, "01", m_df$month)
+
+        m_posix <- lubridate::ydm(m_format_vec)
+        df$fecha[M_obs_index] <- m_posix
+        df$periodicidad[M_obs_index] <- "mensual"
+
+      }
     }
 
 
@@ -54,6 +93,43 @@ istacperiodos2POSIXct <- function(df, date_col) {
       df$periodicidad[quarterly_obs_index] <- "cuatrimestral"
 
     }
+
+
+    # Biweekly -------------
+    # Weekly ---------------
+
+
+    W_obs_index <- grep("W", date_vec)
+
+    if (length(W_obs_index) > 0) {
+      unique_Wobs <- unique(date_vec[W_obs_index])
+      obs <- strsplit(as.character(unique_Wobs), "W")
+      date_df <- as.data.frame(matrix(unlist(obs), ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+
+
+
+        w_obs <- strsplit(as.character(date_vec[W_obs_index]), "W")
+        w_df <- as.data.frame(matrix(unlist(w_obs), ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+        names(w_df) <- c("year", "week")
+
+        w_format_vec <- paste0(w_df$year, "01-01")
+
+        w_posix <- lubridate::ymd(w_format_vec) + lubridate::weeks(as.numeric(w_df$week) - 1)
+
+
+        df$fecha[W_obs_index] <- w_posix
+
+        if (abs(as.numeric(date_df[1,2])-as.numeric(date_df[2,2])) == 2){
+
+            df$periodicidad[W_obs_index] <- "quincenal"
+        } else {
+
+          df$periodicidad[W_obs_index] <- "semanal"
+
+        }
+    }
+
+
 
   } else {
 
