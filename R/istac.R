@@ -22,23 +22,31 @@
 #' @return Data frame with all available requested data.
 #'
 #' @export
-istac <- function(istac_table, islas = "all", label = FALSE, startdate, enddate, freq, mrv, POSIXct = FALSE, cache){
+istac <- function(istac_table, islas = "all", label = TRUE, startdate, enddate, freq, mrv, POSIXct = FALSE, cache){
 
 
   if (missing(cache)) cache <- istacr::cache
 
   # check table ----------
 
-  cache_tables <- cache$namecode
+  cache_tables <- cache$ID
 
 
   table_index <- istac_table %in% cache_tables
 
 
-  if (!table_index) stop("'istac_table' parameter has no valid values. Please check documentation for valid inputs")
+  if (!table_index) stop("'istac_table' parameter has no valid values. Please check documentation for valid inputs.")
 
 
-  out_df <- istac_get(istac_table)
+  out <- istac_get(istac_table)
+
+
+  # check label ---------
+  if(label == TRUE){
+    out_df <- codes2labes(out$datos_lista, out$df)
+
+  } else
+    out_df <- out$df
 
   # check POSIxct --------
 
@@ -46,20 +54,20 @@ istac <- function(istac_table, islas = "all", label = FALSE, startdate, enddate,
 
   if (POSIXct){
 
-    date_index <- names(out_df) %in% c("A\u00F1os","Per\u00EDodo")
+    date_index <- names(out_df) %in% c("A\u00F1os","Periodos")
     vble_date <- names(out_df)[date_index]
 
     if (any(date_index)){
       out_df <- istacperiodos2POSIXct(out_df, vble_date)
-      # Creo qu ela siguiente línea no es necesario en nuestro caso.
+      # Creo que la siguiente línea no es necesaria en nuestro caso.
       #if (missing(startdate) != missing(enddate)) stop("Using either startdate or enddate requires supplying both. Please provide both if a date range is wanted")
 
-      if (missing(startdate)) startdate <- min(out_df$fecha) else startdate <- as.Date(startdate,"%d/%m/%Y")
-      if (missing(enddate)) enddate <- max(out_df$fecha) else enddate <- as.Date(enddate,"%d/%m/%Y")
+      if (missing(startdate)) startdate_db <- min(out_df$fecha) else startdate_db <- as.Date(paste0("01/01/",startdate),"%d/%m/%Y")
+      if (missing(enddate)) enddate_db <- max(out_df$fecha) else enddate_db <- as.Date(paste0("01/01/",enddate),"%d/%m/%Y")
 
         # Habrá que comprobar fechas. Formato %d/%m/%Y o %d-%m%-%Y. Comprobar si cumple estos formatos
         # Habrá que comprobar si sale de rango de fechas. Por ahora vamos a suponer que todo sale bien. 171104
-        index_date <- out_df$fecha >= startdate & out_df$fecha <= enddate
+        index_date <- out_df$fecha >= startdate_db & out_df$fecha <= enddate_db
         out_df <- out_df[index_date, ]
 
         # check mrv ----------
@@ -67,31 +75,82 @@ istac <- function(istac_table, islas = "all", label = FALSE, startdate, enddate,
 
           if (!is.numeric(mrv)) stop("If supplied, mrv must be numeric")
 
-          if(!missing(stardate) == !missing(mrv)) stop("You can supply only a startdate and enddate or mrv but not both")
+          if(!missing(startdate)) stop("You can supply only a startdate and enddate or mrv but not both")
 
-          if (missing(freq)){
-            periodon <- min(match(c("anual","cuatrimestral","mensual"),out_df$periodicidad),na.rm = TRUE)
-            periodo <- c("anual","cuatrimestral","mensual")[periodon]
-            enddate <- max(out_df$fecha)
-            startdate <-  min(out_df$fecha)
+
+            periodon <- min(match(c("anual","semestral","trimestral","mensual","quincenal","semanal"),out_df$periodicidad),na.rm = TRUE)
+            periodo <- c("anual","semestral","trimestral","mensual","quincenal","semanal")[periodon]
+            enddate_db <- max(out_df$fecha)
+            startdate_db <-  min(out_df$fecha)
             startdate_mrv <- switch(periodo,
-                               "anual" = enddate - lubridate::years(mrv),
-                               "cuatrimestral" = enddate - lubridate::months(4*mrv),
-                               "mensual" = endadte - lubridate::months(mrv))
-            stardate <- ifelse(startdate < startdate_mrv, startdate_mrv, startdate)
-            index_date <- out_df$fecha >= startdate & out_df$fecha <= enddate
+                               "anual" = enddate_db - lubridate::years(mrv-1),
+                               "semestral" = enddate_db - lubridate::months(6*mrv-1),
+                               "trimestral" = enddate_db - lubridate::months(4*mrv-1),
+                               "mensual" = enddate_db - lubridate::months(mrv-1),
+                               "quincenal" = enddate_db - lubridate::weeks(mrv*2-1),
+                               "semanal" = enddate_db - lubridate::weeks(mrv-1))
+
+            startdate_db <- if(startdate_db < startdate_mrv) startdate_mrv else startdate_db
+            index_date <- out_df$fecha >= startdate_db & out_df$fecha <= enddate_db
             out_df <- out_df[index_date, ]
 
-          }
+
+         }
+
+        if(!missing(freq)){
+          if(!(freq %in% c("anual","semestral","trimestral","mensual","quincenal","semanal")))
+            stop ("freq must be 'anual','semestral','trimestral','mensual','quincenal' or 'semanal'.")
+
+          if(!(freq %in% out_df$periodicidad)){
+            warning(paste0(freq)," is not aviable in granularity of data. Showing all granularities")
+            out_df
+            } else
+              out_df <- out_df[out_df$periodicidad == freq, ]
 
         }
 
       } else
-        warning("The data is no time dependence.")
+        warning("The data is no time dependent.")
+
+
+  } else {
+      if(!missing(startdate) | !missing(enddate) | !missing(mrv) | !missing(freq))
+        warning("startdate, enddate, mrv, freq are ignored when POSCIXct is set to FALSE.")
+  }
+
+
+  if(!missing(islas)){
+    if(!("islas" %in% tolower(names(out_df))))
+      warning("There is no 'Islas' column in the database to filter")
+    else{
+      if(!label){
+        warning("If label = FALSE the parameter islas will set to 'all'")
+        islas <- 'all'
+        }
+
+      if(!any(tolower(islas) %in% c("all","canarias","lanzarote","fuerteventura","gran canaria","tenerife","la gomera","la palma", "el hierro"))){
+        warning("islas must be 'all','canarias','lanzarote','fuerteventura','gran canaria','tenerife','la gomera','la palma' or 'el hierro'. 'all' will be taken instead.")
+        islas = "all"
+      }
+      if (islas != "all")
+        out_df <- out_df[tolower(out_df$Islas) %in% tolower(islas), ]
 
 
     }
 
 
+
+
+
+  }
+
+
+
+
+
   out_df
 }
+
+
+
+### quitar nombre fila cuando label = true
