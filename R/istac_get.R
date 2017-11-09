@@ -14,7 +14,9 @@ istac_get <- function(indicador){
   df <- as.data.frame(matrix(df, ncol = length(datos_lista$data$dimCodes[[1]]), byrow = TRUE),
                       stringsAsFactors = FALSE)
   names(df) <- datos_lista$categories$variable
-  df["valor"] <- as.numeric(datos_lista$data$Valor)
+  tvalor <- gsub("\\.","",datos_lista$data$Valor)
+  tvalor <- gsub(",",".",tvalor)
+  df["valor"] <- as.numeric(tvalor)
 
 
 
@@ -28,6 +30,6 @@ istac_get <- function(indicador){
   #  setNames(nm = datos_lista$categories$variable) %>%
   #  mutate(valor = datos_lista$data$Valor)
 
-  df
+  list(datos_lista = datos_lista, df = df)
 
 }
