@@ -22,7 +22,7 @@
 #' istac_search(pattern = "islote|roque")
 #'
 #' @export
-istac_search <- function(pattern, fields = "title", extra = TRUE, cache){
+istac_search <- function(pattern, fields = "titulo", extra = TRUE, cache){
 
   if (missing(cache)) cache <- istacr::cache
 
@@ -42,7 +42,7 @@ istac_search <- function(pattern, fields = "title", extra = TRUE, cache){
 
   } else {
 
-    match_df <- cache[match_index, c("title", "namecode")]
+    match_df <- cache[match_index, c("titulo", "ID")]
 
   }
 
