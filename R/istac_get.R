@@ -1,8 +1,8 @@
 istac_get <- function(indicador){
 
-  tabla <- istac_search(pattern = indicador, fields = "namecode", cache = cache)
+  tabla <- istac_search(pattern = indicador, fields = "ID", cache = cache, exact = TRUE)
 
-  url.datos <- tabla$`API JSON`
+  url.datos <- tabla$apijson
 
   datos_lista <- jsonlite::fromJSON(readLines(url.datos,
                                     warn = FALSE,

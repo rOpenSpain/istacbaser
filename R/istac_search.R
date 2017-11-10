@@ -22,13 +22,15 @@
 #' istac_search(pattern = "islote|roque")
 #'
 #' @export
-istac_search <- function(pattern, fields = "titulo", extra = TRUE, cache){
+istac_search <- function(pattern, fields = "titulo", extra = TRUE, exact = FALSE, cache){
 
   if (missing(cache)) cache <- istacr::cache
 
 
   match_index <- sort(unique(unlist(sapply(fields, FUN = function(i)
-    grep(pattern, cache[, i], ignore.case = TRUE), USE.NAMES = FALSE)
+    if(!exact) grep(pattern, cache[, i], ignore.case = TRUE)
+    else grep(paste0("^",pattern,"$"), cache[, i], ignore.case = TRUE),
+    USE.NAMES = FALSE)
   )))
 
 

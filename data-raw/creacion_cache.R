@@ -8,7 +8,7 @@ metadata <- read_xlsx("C:/Users/arama/Dropbox/170126 Trabajos José Manuel Cazor
 
 # Vamos a trabajar solo con las primeras 15 tablas para empezar a hacer pruebas. Este será nuestro cache
 
-pruebas <- head(metadata,50)
+pruebas <- metadata[261:275,]
 if (!all(is.na(pruebas$error))) pruebas <- pruebas[pruebas$error != "ERROR", ]
 
 pruebas[,"error"] <- NULL
@@ -34,6 +34,7 @@ lista <- pruebas$apijson %>%
 
 cache <- cbind(pruebas[, -6],lista)
 
-save(cache, file = "data/cache1.Rdata")
+save(cache, file = "data/cache13.Rdata")
+
 
 
