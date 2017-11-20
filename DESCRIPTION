@@ -5,7 +5,7 @@ Description: Functions for searching and downloading data and statistics from
   the ISTAC API (<http://www.gobiernodecanarias.org/istac/>).
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Cazorla", "José Manuel", email = "xxx@yyy.com", role = "aut"),
+    person("Cazorla-Artiles", "José Manuel", email = "xxx@yyy.com", role = "aut"),
     person("González-Martel", "Christian", email = "christian.gonzalez@ulpgc.es", role = "cre"))
 URL: https://github.com/chrglez/istacr
 BugReports: https://github.com/chrglez/istacr/issues
