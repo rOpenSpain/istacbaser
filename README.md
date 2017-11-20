@@ -1,6 +1,6 @@
 ---
 title: "Introduction to the istacr R-package"
-author: "José Manuel Cazorla, Christian González-Martel"
+author: "José Manuel Cazorla-Artiles, Christian González-Martel"
 date: "2017-11-27"
 ---
 
