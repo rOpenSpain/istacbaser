@@ -4,7 +4,8 @@
 \alias{istac_search}
 \title{Search information about data available through ISTAC API}
 \usage{
-istac_search(pattern, fields = "title", extra = TRUE, cache)
+istac_search(pattern, fields = "titulo", extra = TRUE, exact = FALSE,
+  cache)
 }
 \arguments{
 \item{pattern}{Character string or regular expression to be matched.}
@@ -13,6 +14,8 @@ istac_search(pattern, fields = "title", extra = TRUE, cache)
 
 \item{extra}{if \code{FALSE}, only the namecode and title are returned,
 if \code{TRUE}, all columns of the \code{cache} are returned.}
+
+\item{exact}{Search for the exact pattern.}
 
 \item{cache}{Data frame with metadata about API and ISTAC information.}
 }
@@ -27,8 +30,8 @@ returns a data frame with results
 istac_search(pattern = "superficie")
 istac_search(pattern = "superficie", extra = TRUE)
 
-istac_search(pattern = "medio ambiente", fields = "Estadísticas por temas")
-istac_search(pattern = "medio ambiente", fields = "Estadísticas por temas", extra = TRUE)
+istac_search(pattern = "medio ambiente", fields = "tema")
+istac_search(pattern = "medio ambiente", fields = "tema", extra = TRUE)
 
 # with regular expression operators
 # 'islote' OR 'roque'

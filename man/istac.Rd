@@ -4,37 +4,47 @@
 \alias{istac}
 \title{Download data from the ISTAC API}
 \usage{
-istac(istac_table, islas = "all", label = FALSE, startdate, enddate, freq,
-  mrv, POSIXct = FALSE, cache)
+istac(istac_table, islas = "all", label = TRUE, POSIXct = FALSE,
+  startdate, enddate, freq, mrv, cache)
 }
 \arguments{
-\item{istac_table}{Character string with the namecode of the table requested.
-This namecode corresponds to the \code{namecode} column from \code{\link{cache}}.}
+\item{istac_table}{Character string with the \code{ID} of the table requested.
+This \code{ID} corresponds to the \code{ID} column from \code{\link{cache}}.}
 
-\item{islas}{Character vector of islands codes requested. Default value is special code of \code{all}.}
+\item{islas}{Character vector of islands name requested. Default value is special code of \code{all}.
+Valid values for islands are: El Hierro, La Palma, La Gomera, Tenerife, Gran Canaria, Fuerteventura and Lanzarote.}
 
 \item{label}{if \code{FALSE}, the data frame returned has the codes used in ISTAC API,
 if \code{TRUE}, the data frame returned has the labels used in ISTAC API. Default value is \code{FALSE}.}
 
-\item{startdate}{Numeric or character. If numeric it must be in \%Y form (i.e. four digit year).
-For data at the subannual granularity the API supports a format as follows: for monthly data, "2016M01"
-and for quarterly data, "2016Q1". This also accepts a special value of "YTD", useful for more frequently
-updated subannual indicators.}
+\item{POSIXct}{if \code{TRUE}, additonal columns \code{fecha} and \code{periodicidad} are added.
+\code{fecha} converts the default date into a \code{\link[base]{POSIXct}}. \code{periodicidad}
+denotes the time resolution that the date represents.  Useful for \code{freq} filter,  If \code{FALSE}, these fields are not added.}
 
-\item{enddate}{Numeric or character. If numeric it must be in \%Y form (i.e. four digit year).
-For data at the subannual granularity the API supports a format as follows: for monthly data, "2016M01"
-and for quarterly data, "2016Q1".}
+\item{startdate}{Numeric. Must be in \%Y form (i.e. four digit year).}
 
-\item{freq}{Character String. For fetching quarterly ("Q"), monthly("M") or yearly ("Y") values.
+\item{enddate}{Numeric. Must be in \%Y form (i.e. four digit year).}
+
+\item{freq}{Character String. For fetching yearly ("anual"), biannual ("semestral"), quaterly ("trimestral"), monthly("mensual"), bi-weekly("quincenal"), weekly("semanal") values.
 Currently works along with \code{mrv}.}
 
 \item{mrv}{Numeric. The number of Most Recent Values to return. A replacement of \code{startdate} and \code{enddate},
-this number represents the number of observations you which to return starting from the most recent date of collection.
-Useful in conjuction with \code{freq}.}
+this number represents the number of observations you which to return starting from the most recent date of collection.}
+
+\item{cache}{Data frame with tables from ISTAC API.}
 }
 \value{
 Data frame with all available requested data.
 }
 \description{
 This function downloads the requested information using the ISTAC API.
+}
+\note{
+The \code{POSIXct} parameter requries the use of \code{\link[lubridate]{lubridate}} (>= 1.5.0). All dates
+ are rounded down to the floor. For example a value for the year 2016 would have a \code{POSIXct} date of
+ \code{2016-01-01}. If this package is not available and the \code{POSIXct} parameter is set to \code{TRUE},
+ the parameter is ignored and a \code{warning} is produced.
+
+ \code{startdate}, \code{enddate}, \code{freq}, \code{mrv} with \code{POSISXct}=\code{FALSE} are ignored when POSCIXct is set to FALSE.
+and a \code{warning} is produced.
 }

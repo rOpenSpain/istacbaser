@@ -1,6 +1,19 @@
+#' Call the ISTAC API and return a formatted data frame
+#'
+#' This function calls the ISTAC API, capture the data in json
+#' format and return a list with data in json format and a formatted data frame.
+#'
+#' # To be used inside of \code{\link{istac}}
+#'
+#' @param indicador A character string. The \code{ID} code of the requested table.
+#' Normally gived by the \code{\link{istac_search}} function.
+#' @return A list with data in json format and a formatted data frame.
+#' @examples
+#' # Percentiles de renta disponible (año anterior al de la entrevista) por hogar en Canarias y años.
+#' istac_get("soc.cal.enc.res.3637")
 istac_get <- function(indicador){
 
-  tabla <- istac_search(pattern = indicador, fields = "ID", cache = cache, exact = TRUE)
+  tabla <- istac_search(pattern = indicador, fields = "ID", cache = istacr::cache, exact = TRUE)
 
   url.datos <- tabla$apijson
 
@@ -19,16 +32,6 @@ istac_get <- function(indicador){
   df["valor"] <- as.numeric(tvalor)
 
 
-
-
-
-
-  # df <- datos_lista$data$dimCodes %>%
-  #   unlist() %>%
-  #   matrix(ncol = length(datos_lista$data$dimCodes[[1]]), byrow = TRUE) %>%
-  #  as.data.frame() %>%
-  #  setNames(nm = datos_lista$categories$variable) %>%
-  #  mutate(valor = datos_lista$data$Valor)
 
   list(datos_lista = datos_lista, df = df)
 

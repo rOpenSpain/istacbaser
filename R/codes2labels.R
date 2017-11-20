@@ -1,3 +1,13 @@
+#' Format data of \code{\link{istac_get}} return from codes to labels
+#'
+#' change the data of dataframe returned by \code{\link{istac_get}}
+#' from the code gived by th ISTAC API to the labels gived them.
+#'
+#' @param datos_lista a list given by \code{\link{istac_get}}
+#' @param df a data frame with data in Code format.
+#'
+#' @return a data frame with the column names changed accordingly
+
 codes2labes <- function(datos_lista, df){
 
   variables <- datos_lista$categories$variable
@@ -15,8 +25,8 @@ codes2labes <- function(datos_lista, df){
     columna <- df[[x]]
     c_cambio <- labels[[x]]
 
-    c_cambio <- gsub("^ ","",c_cambio)
-    c_cambio <- gsub(" $","",c_cambio)
+    c_cambio <- trimws(c_cambio,which = "both")
+
 
 
     names(c_cambio) <- codigos[[x]]

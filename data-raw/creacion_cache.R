@@ -3,19 +3,16 @@ library(purrr)
 library(tidyr)
 library(jsonlite)
 library(dplyr)
-metadata <- read_xlsx("C:/Users/arama/Dropbox/170126 Trabajos José Manuel Cazorla/API ISTAC/Metadatos Istac completo2.xlsx",
-                      col_types = rep("text",9))
 
-# Vamos a trabajar solo con las primeras 15 tablas para empezar a hacer pruebas. Este será nuestro cache
+metadata <- read_xlsx("Metadatos_Istac.xlsx")
 
-pruebas <- metadata[261:275,]
-if (!all(is.na(pruebas$error))) pruebas <- pruebas[pruebas$error != "ERROR", ]
+if (!all(is.na(metadata$error))) metadata <- metadata[!(!is.na(metadata$error) & metadata$error == "ERROR"), ]
 
-pruebas[,"error"] <- NULL
+metadata[,"error"] <- NULL
 
 # Creamos nombre de tabla
 
-columna <- apply(pruebas[,1:4],2,substr,1,3) %>%
+columna <- apply(metadata[,1:4],2,substr,1,3) %>%
   as.data.frame(stringsAsFactors = FALSE) %>%
   setNames(paste0("v",1:4)) %>%
   mutate(id = row_number()) %>%
@@ -23,18 +20,34 @@ columna <- apply(pruebas[,1:4],2,substr,1,3) %>%
   tolower() %>%
   gsub(" ","",.)
 
-pruebas$ID <- columna
+metadata$ID <- columna
 
-lista <- pruebas$apijson %>%
-  map(~ .x %>%
-        readLines(warn = FALSE, encoding = "UTF-8") %>%
-        fromJSON(simplifyDataFrame = TRUE)) %>%
-  map_df(`[`, c("title","source","surveyTitle")) %>%
-  setNames(c("titulo","origen","encuesta"))
+safe_scrap <- safely(~ .x %>%
+                       readLines(warn = FALSE, encoding = "UTF-8") %>%
+                       fromJSON(simplifyDataFrame = TRUE))
 
-cache <- cbind(pruebas[, -6],lista)
+lista <- metadata$apijson %>%
+  map(safe_scrap)
 
-save(cache, file = "data/cache13.Rdata")
+
+tablasok <- map(lista,"error") %>% map_lgl(is.null)
+
+df <- map(lista[tablasok], "result") %>% map_df(`[`, c("title","source","surveyTitle"))
+names(df) <- c("titulo","origen","encuesta")
+
+
+
+cache <- cbind(metadata[tablasok, -6],df)
+
+save(cache, file = "cache.Rdata")
+
+
+####
+
+
+
+
+
 
 
 
