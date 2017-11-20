@@ -37,7 +37,7 @@ library(istacr)
 str(cache, max.level = 1)
 ```
 
-## Search available data with `wbsearch()`
+## Search available data with `istac_search()`
 
 `istac_search()` searches through the `cache` data frame to find indicators that match a search pattern. An example of the structure of this data frame is below
 ```{r, echo=FALSE, results='asis'}
