@@ -146,7 +146,8 @@ istac <- function(istac_table, islas = "all", label = TRUE, POSIXct = FALSE, sta
 
 
   if(!missing(islas)){
-    if(!("islas" %in% tolower(names(out_df))))
+    # if(!("islas" %in% tolower(names(out_df))))
+    if(!(any(grepl("islas",tolower(names(out_df))))))
       warning("There is no 'Islas' column in the database to filter")
     else{
       if(!label){
