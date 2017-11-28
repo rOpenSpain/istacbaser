@@ -29,6 +29,7 @@ istac_get <- function(indicador){
   names(df) <- datos_lista$categories$variable
   #tvalor <- gsub("\\.","",datos_lista$data$Valor)
   #tvalor <- gsub(",",".",tvalor)
+  tvalor <- datos_lista$data$Valor
   df["valor"] <- as.numeric(tvalor)
 
 
