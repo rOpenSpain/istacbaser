@@ -1,4 +1,4 @@
-Package: istacr
+Package: istacbaser
 Type: Package
 Title: Programmatic Access to Data from the ISTAC API
 Description: Functions for searching and downloading data and statistics from
