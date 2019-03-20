@@ -1,7 +1,7 @@
-#' Add a POSIXct dates to a ISTAC API return
+#' Add a POSIXct dates to a ISTACBASE API return
 #'
 #' Add a POSIXct date column as well as a column with the
-#' appropreiate granularity to a ISTAC API return
+#' appropreiate granularity to a ISTACBASE API return
 #'
 #' @param df data frame returned from API call
 #' @param date_col name of the current date field
@@ -10,7 +10,7 @@
 #' \code{fecha} and \code{periodicidad} is returned. If the above package is not available,
 #' the orignal data frame is returned unaltered with an additional warning message.
 
-istacperiodos2POSIXct <- function(df, date_col) {
+istacbaseperiodos2POSIXct <- function(df, date_col) {
 
   if (requireNamespace("lubridate", versionCheck = list(op = ">=", version = "1.5.0"),
                        quietly = TRUE)) {

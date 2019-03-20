@@ -1,4 +1,4 @@
-#' Search information about data available through ISTAC API
+#' Search information about data available through ISTACBASE API
 #'
 #' This funcion allows finds those tables that match the search term and
 #' returns a data frame with results
@@ -12,20 +12,20 @@
 #' @return Data frame with metadata that match the search term.
 #'
 #' @examples
-#' istac_search(pattern = "superficie")
-#' istac_search(pattern = "superficie", extra = TRUE)
+#' istacbase_search(pattern = "superficie")
+#' istacbase_search(pattern = "superficie", extra = TRUE)
 #'
-#' istac_search(pattern = "medio ambiente", fields = "tema")
-#' istac_search(pattern = "medio ambiente", fields = "tema", extra = TRUE)
+#' istacbase_search(pattern = "medio ambiente", fields = "tema")
+#' istacbase_search(pattern = "medio ambiente", fields = "tema", extra = TRUE)
 #'
 #' # with regular expression operators
 #' # 'islote' OR 'roque'
-#' istac_search(pattern = "islote|roque")
+#' istacbase_search(pattern = "islote|roque")
 #'
 #' @export
-istac_search <- function(pattern, fields = "titulo", extra = TRUE, exact = FALSE, cache){
+istacbase_search <- function(pattern, fields = "titulo", extra = TRUE, exact = FALSE, cache){
 
-  if (missing(cache)) cache <- istacr::cache
+  if (missing(cache)) cache <- istacbaser::cache
 
 
   match_index <- sort(unique(unlist(sapply(fields, FUN = function(i)

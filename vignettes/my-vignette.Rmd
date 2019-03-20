@@ -1,10 +1,11 @@
 ---
-title: "Introduction to the istacr R-package"
+title: "Introduction to the istacbaser R-package"
 author: "José Manuel Cazorla, Christian González-Martel"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+
 vignette: >
-  %\VignetteIndexEntry{Introduction to the istacr R-package}
+  %\VignetteIndexEntry{Introduction to the istacbaser R-package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,15 +13,15 @@ vignette: >
 # Introduction
 
 
-The Canary Islands Statistics Institute (Instituto Canario de Estadítica, ISTAC)^[<http://www.gobiernodecanarias.org/istac/>] is the central organ of the autonomous statistical system and official research center of the Government of the Canary Islands, created and regulated by Law 1/1991 of 28 January, Statistics of the Autonomous Community of the Canary Islands (CAC), and among others, assigns the following functions:
+The Canary Islands Statistics Institute (Instituto Canario de Estadítica, istacbase)^[<http://www.gobiernodecanarias.org/istacbase/>] is the central organ of the autonomous statistical system and official research center of the Government of the Canary Islands, created and regulated by Law 1/1991 of 28 January, Statistics of the Autonomous Community of the Canary Islands (CAC), and among others, assigns the following functions:
 
-* Providing statistical information: The ISTAC has among its objectives to provide, with technical and professional independence, statistical information of interest to the CAC, taking into account the fragmentation of the territory and its singularities and complying with the principles established in the Code of Good Practices of the European Statistics.
+* Providing statistical information: The istacbase has among its objectives to provide, with technical and professional independence, statistical information of interest to the CAC, taking into account the fragmentation of the territory and its singularities and complying with the principles established in the Code of Good Practices of the European Statistics.
 
-* Coordinate public statistical activity: The ISTAC is the body responsible for promoting, managing and coordinating the public statistical activity of the CAC, assuming the exercise of the statutory competence provided for in Article 30, paragraph 23, of the Statute of Autonomy of the Canary Islands . 
+* Coordinate public statistical activity: The istacbase is the body responsible for promoting, managing and coordinating the public statistical activity of the CAC, assuming the exercise of the statutory competence provided for in Article 30, paragraph 23, of the Statute of Autonomy of the Canary Islands . 
 
-To help provide access to this rich source of information, ISTAC themselves, provide a well structured API^[<https://es.slideshare.net/ISTAC/guia-de-uso-api-de-acceso-a-istac-base>]. While this API is very useful for integration into web services and other high-level applications, it becomes quickly overwhelming for researchers who have neither the time nor the expertise to develop software to interface with the API. This leaves the researcher to rely on manual bulk downloads of spreadsheets of the data they are interested in. This too is can quickly become overwhelming, as the work is manual, time consuming, and not easily reproducible. The goal of the `istacr` R-package is to provide a bridge between these alternatives and allow researchers to focus on their research questions and not the question of accessing the data. The `istacr` R-package allows researchers to quickly search and download the data of their particular interest in a programmatic and reproducible fashion; this facilitates a seamless integration into their workflow and allows analysis to be quickly rerun on different areas of interest and with realtime access to the latest available data.
+To help provide access to this rich source of information, istac themselves, provide a well structured API^[<https://es.slideshare.net/ISTAC/guia-de-uso-api-de-acceso-a-istac-base>]. While this API is very useful for integration into web services and other high-level applications, it becomes quickly overwhelming for researchers who have neither the time nor the expertise to develop software to interface with the API. This leaves the researcher to rely on manual bulk downloads of spreadsheets of the data they are interested in. This too is can quickly become overwhelming, as the work is manual, time consuming, and not easily reproducible. The goal of the `istacbaser` R-package is to provide a bridge between these alternatives and allow researchers to focus on their research questions and not the question of accessing the data. The `istacbaser` R-package allows researchers to quickly search and download the data of their particular interest in a programmatic and reproducible fashion; this facilitates a seamless integration into their workflow and allows analysis to be quickly rerun on different areas of interest and with realtime access to the latest available data.
 
-### Highlighted features of the `istacr` R-package: 
+### Highlighted features of the `istacbaser` R-package: 
 
 - Access to all data available in the API
 - Support for searching and downloading data
@@ -30,74 +31,74 @@ To help provide access to this rich source of information, ISTAC themselves, pro
 
 # Getting Started
 
-The first step would be searching for the data you are interested in. `istac_search()` provides `grep` style searching of all available indicators from the ISTAC API and returns the indicator information that matches your query.
+The first step would be searching for the data you are interested in. `istacbase_search()` provides `grep` style searching of all available indicators from the istacbase API and returns the indicator information that matches your query.
 
 
 ## Finding available data with `cache`
 
-For performance and ease of use, a cached version of useful information is provided with the `istacr` R-package. This data is called `cache` and provides a snapshot of available islands, indicators, and other relevant information. `cache` is by default the the source from which `istac_search()` and `istac()` uses to find matching information. The structure of `cache` is as follows
+For performance and ease of use, a cached version of useful information is provided with the `istacbaser` R-package. This data is called `cache` and provides a snapshot of available islands, indicators, and other relevant information. `cache` is by default the the source from which `istacbase_search()` and `istacbase()` uses to find matching information. The structure of `cache` is as follows
 ```{r}
-library(istacr)
+library(istacbaser)
 
 str(cache, max.level = 1)
 ```
 
-## Search available data with `istac_search()`
+## Search available data with `istacbase_search()`
 
-`istac_search()` searches through the `cache` data frame to find indicators that match a search pattern. An example of the structure of this data frame is below
+`istacbase_search()` searches through the `cache` data frame to find indicators that match a search pattern. An example of the structure of this data frame is below
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(head(istacr::cache[4310:4311, ]))
+knitr::kable(head(istacbaser::cache[4310:4311, ]))
 ```
 
-By default the search is done over the `titulo` field and returns all the columns of the matching rows. The `ID` values are inputs into `istac()`, the function for downloading the data. To return the key columns `ID` and `titulo` for the `cache` data frame, you can set `extra = TRUE`.
+By default the search is done over the `titulo` field and returns all the columns of the matching rows. The `ID` values are inputs into `istacbase()`, the function for downloading the data. To return the key columns `ID` and `titulo` for the `cache` data frame, you can set `extra = TRUE`.
 ```{r}
-library(istacr)
+library(istacbaser)
 
-busqueda <- istac_search(pattern = "parado")
+busqueda <- istacbase_search(pattern = "parado")
 head(busqueda)
 
 ```
 
 Other fields can be searched by simply changing the `fields` parameter. For example
 ```{r}
-library(istacr)
+library(istacbaser)
 
-EPA_busqueda <- istac_search(pattern = "Encuesta de Población Activa", fields = "encuesta")
+EPA_busqueda <- istacbase_search(pattern = "Encuesta de Población Activa", fields = "encuesta")
 head(EPA_busqueda)
 
 ```
 
 Regular expressions are also supported.
 ```{r}
-library(istacr)
+library(istacbaser)
 
 # 'pobreza' OR 'parados' OR 'trabajador'
-popatr_busqueda <- istac_search(pattern = "pobreza|parados|trabajador")
+popatr_busqueda <- istacbase_search(pattern = "pobreza|parados|trabajador")
 
 head(popatr_busqueda)
 
 ```
 
-## Downloading data with `istac()`
+## Downloading data with `istacbase()`
 
-Once you have found the set of indicators that you would like to explore further, the next step is downloading the data with `istac()`. The following examples are meant to highlight the different ways in which `istac()` can be used and demonstrate the major optional parameters.
+Once you have found the set of indicators that you would like to explore further, the next step is downloading the data with `istacbase()`. The following examples are meant to highlight the different ways in which `istacbase()` can be used and demonstrate the major optional parameters.
 
 The default value for the `islas` parameter is a special value of `all` which as you might expect, returns data on the selected `ID` for every available country or region, if it is aviable.
 ```{r}
-library(istacr)
+library(istacbaser)
 
-pop_data <- istac(istac_table = "dem.pob.exp.res.40")
+pop_data <- istacbase(istacbase_table = "dem.pob.exp.res.40")
 
 head(pop_data)
 ```
 
 If you are interested in only some subset of islands you can pass along the specific island to the `island` parameter. The islands that can be passed to the `islas` parameter correspond to `all`,`Canarias`,`Lanzarote`,`Fuerteventura`,`Gran Canaria`,`Tenerife`,`La Gomera`,`La Palma` or `El Hierro`.
 ```{r}
-library(istacr)
+library(istacbaser)
 
 # Population, total
 # country values: iso3c, iso2c, regionID, adminID, incomeID
-pop_data <- istac(islas = c("Lanzarote","Fuerteventura"), istac_table = "dem.pob.exp.res.40")
+pop_data <- istacbase(islas = c("Lanzarote","Fuerteventura"), istacbase_table = "dem.pob.exp.res.40")
 
 head(pop_data)
 ```
@@ -107,10 +108,10 @@ head(pop_data)
 Setting the parameter `POSIXct = TRUE` gives you the posibility to work with dates. You can set a `startdate` and `enddate`.
 
 ```{r}
-library(istacr)
+library(istacbaser)
 
 # islas values: all,Canarias,Lanzarote,Fuerteventura,Gran Canaria,Tenerife,La Gomera,La Palma or El Hierro
-pop_data <- istac(islas = c("Lanzarote","Fuerteventura"), istac_table = "dem.pob.exp.res.40")
+pop_data <- istacbase(islas = c("Lanzarote","Fuerteventura"), istacbase_table = "dem.pob.exp.res.40")
 
 head(pop_data)
 ```
@@ -124,19 +125,19 @@ The default format for the `Periodo` or `Años` column is not conducive to sorti
  
 
 ```{r}
-library(istacr)
+library(istacbaser)
 
-pop_data <- istac(istac_table = "dem.pob.exp.res.40", POSIXct = TRUE, startdate = 2010, enddate = 2016)
+pop_data <- istacbase(istacbase_table = "dem.pob.exp.res.40", POSIXct = TRUE, startdate = 2010, enddate = 2016)
 
 head(pop_data)
 ```
 
 The `POSIXct = TRUE` option makes plotting and sorting dates much easier.
 ```{r, fig.height = 4, fig.width = 7.5}
-library(istacr)
+library(istacbaser)
 library(ggplot2)
 
-pop_data <- istac(islas = "Canarias", istac_table = "dem.pob.exp.res.40", POSIXct = TRUE, startdate = 2010, enddate = 2016)
+pop_data <- istacbase(islas = "Canarias", istacbase_table = "dem.pob.exp.res.40", POSIXct = TRUE, startdate = 2010, enddate = 2016)
 
 
 ggplot(pop_data, aes(x = fecha, y = valor, colour = Nacionalidades)) +
@@ -150,9 +151,9 @@ ggplot(pop_data, aes(x = fecha, y = valor, colour = Nacionalidades)) +
 ### Using `mrv`
 If you do not know the latest date an indicator you are interested in is available  you can use the `mrv` instead of `startdate` and `enddate`. `mrv` stands for most recent value and takes a `integer` corresponding to the number of most recent values you wish to return
 ```{r}
-library(istacr)
+library(istacbaser)
 
-pop_data <- istac(istac_table = 'dem.pob.exp.res.40', POSIXct = TRUE, mrv = 1)
+pop_data <- istacbase(istacbase_table = 'dem.pob.exp.res.40', POSIXct = TRUE, mrv = 1)
 
 head(pop_data)
 ```
@@ -164,9 +165,9 @@ If the data has several granularity, you can select son eof them with the parame
 `anual`,`semestral`,`trimestral`,`mensual`,`quincenal`,`semanal`. If the granularity selected is not aviable all granularity will be showed.
 
 ```{r}
-library(istacr)
+library(istacbaser)
 
-soc_data <- istac(istac_table = 'soc.sal.est.ser.1625', POSIXct = TRUE, freq = "semestral")
+soc_data <- istacbase(istacbase_table = 'soc.sal.est.ser.1625', POSIXct = TRUE, freq = "semestral")
 
 head(soc_data)
 ```
@@ -174,12 +175,12 @@ head(soc_data)
 
 
 ## `startdate`, `enddate`, `mrv`, `freq` with `POSIXct = FALSE`  
-If you make a query with `istac()` and `POSIXct = FALSE` the `startdate`, `enddate`, `mrv`, `freq` are ignored and the function will launch a warning.
+If you make a query with `istacbase()` and `POSIXct = FALSE` the `startdate`, `enddate`, `mrv`, `freq` are ignored and the function will launch a warning.
 
 ```{r}
-library(istacr)
+library(istacbaser)
 
-soc_data <- istac(istac_table = 'soc.sal.est.ser.1625', POSIXct = FALSE, freq = "semestral")
+soc_data <- istacbase(istacbase_table = 'soc.sal.est.ser.1625', POSIXct = FALSE, freq = "semestral")
 
 head(soc_data)
 ```

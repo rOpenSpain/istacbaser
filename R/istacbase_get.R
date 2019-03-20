@@ -1,19 +1,19 @@
-#' Call the ISTAC API and return a formatted data frame
+#' Call the ISTACBASE API and return a formatted data frame
 #'
-#' This function calls the ISTAC API, capture the data in json
+#' This function calls the ISTACBASE API, capture the data in json
 #' format and return a list with data in json format and a formatted data frame.
 #'
-#' # To be used inside of \code{\link{istac}}
+#' # To be used inside of \code{\link{istacbase}}
 #'
 #' @param indicador A character string. The \code{ID} code of the requested table.
-#' Normally gived by the \code{\link{istac_search}} function.
+#' Normally gived by the \code{\link{istacbase_search}} function.
 #' @return A list with data in json format and a formatted data frame.
 #' @examples
 #' # Percentiles de renta disponible (año anterior al de la entrevista) por hogar en Canarias y años.
-#' istac_get("soc.cal.enc.res.3637")
-istac_get <- function(indicador){
+#' istacbase_get("soc.cal.enc.res.3637")
+istacbase_get <- function(indicador){
 
-  tabla <- istac_search(pattern = indicador, fields = "ID", cache = istacr::cache, exact = TRUE)
+  tabla <- istacbase_search(pattern = indicador, fields = "ID", cache = istacbaser::cache, exact = TRUE)
 
   url.datos <- tabla$apijson
 

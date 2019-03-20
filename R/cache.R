@@ -1,7 +1,7 @@
 #' Cached information from the ISTAC API
 #'
 #' This data is a cached result of the accesibles tables using the ISTAC API.
-#' By default functions \code{\link{istac}} and \code{\link{istac_search}} use this
+#' By default functions \code{\link{istacbase}} and \code{\link{istacbase_search}} use this
 #' data for the \code{cache} parameter.
 #'
 #' This data was updated on November 18, 2017

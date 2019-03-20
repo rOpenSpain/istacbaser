@@ -12,10 +12,10 @@ BugReports: https://github.com/chrglez/istacr/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: jsonlite
-RoxygenNote: 6.0.1
+Imports: jsonlite,
+	lubridate (>= 1.5.0)
+RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown,
-    ggplot2,
-    lubridate (>= 1.5.0)
+    ggplot2
 VignetteBuilder: knitr

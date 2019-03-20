@@ -1,13 +1,13 @@
-#' Download data from the ISTAC API
+#' Download data from the ISTACBASE API
 #'
-#' This function downloads the requested information using the ISTAC API.
+#' This function downloads the requested information using the ISTACBASE API.
 #'
-#' @param istac_table Character string with the \code{ID} of the table requested.
+#' @param istacbase_table Character string with the \code{ID} of the table requested.
 #' This \code{ID} corresponds to the \code{ID} column from \code{\link{cache}}.
 #' @param islas Character vector of islands name requested. Default value is special code of \code{all}.
 #' Valid values for islands are: El Hierro, La Palma, La Gomera, Tenerife, Gran Canaria, Fuerteventura and Lanzarote.
-#' @param label if \code{FALSE}, the data frame returned has the codes used in ISTAC API,
-#' if \code{TRUE}, the data frame returned has the labels used in ISTAC API. Default value is \code{FALSE}.
+#' @param label if \code{FALSE}, the data frame returned has the codes used in ISTACBASE API,
+#' if \code{TRUE}, the data frame returned has the labels used in ISTACBASE API. Default value is \code{FALSE}.
 #' @param POSIXct if \code{TRUE}, additonal columns \code{fecha} and \code{periodicidad} are added.
 #'  \code{fecha} converts the default date into a \code{\link[base]{POSIXct}}. \code{periodicidad}
 #'  denotes the time resolution that the date represents.  Useful for \code{freq} filter,  If \code{FALSE}, these fields are not added.
@@ -17,7 +17,7 @@
 #'  Currently works along with \code{mrv}.
 #' @param mrv Numeric. The number of Most Recent Values to return. A replacement of \code{startdate} and \code{enddate},
 #' this number represents the number of observations you which to return starting from the most recent date of collection.
-#' @param cache Data frame with tables from ISTAC API.
+#' @param cache Data frame with tables from ISTACBASE API.
 #' @return Data frame with all available requested data.
 #' @note The \code{POSIXct} parameter requries the use of \code{\link[lubridate]{lubridate}} (>= 1.5.0). All dates
 #'  are rounded down to the floor. For example a value for the year 2016 would have a \code{POSIXct} date of
@@ -30,41 +30,41 @@
 #'
 #' @examples
 #' # Percentiles de renta disponible (año anterior al de la entrevista) por hogar en Canarias y años.
-#' istac("soc.cal.enc.res.3637")
+#' istacbase("soc.cal.enc.res.3637")
 #'
 #' # query using startdate and enddate
 #' # Percentiles de renta disponible (año anterior al de la entrevista) por hogar en Canarias y años.
-#' istac("soc.cal.enc.res.3637", POSIXct = TRUE, startdate = 2010, enddate = 2015)
+#' istacbase("soc.cal.enc.res.3637", POSIXct = TRUE, startdate = 2010, enddate = 2015)
 #'
 #'
 #' # query using \code{islas} filter
 #' # Población según sexos y edades año a año. Islas de Canarias y años.
-#' istac("dem.pob.exp.res.35", islas = "Fuerteventura")
+#' istacbase("dem.pob.exp.res.35", islas = "Fuerteventura")
 #'
 #' # if you want the most recent values
-#' istac(dem.pob.exp.res.35", mrv = 4)
+#' istacbase("dem.pob.exp.res.35", POSIXct = TRUE, mrv = 4)
 #'
 #'
 #'
 #' @export
 #'
-istac <- function(istac_table, islas = "all", label = TRUE, POSIXct = FALSE, startdate, enddate, freq, mrv,  cache){
+istacbase <- function(istacbase_table, islas = "all", label = TRUE, POSIXct = FALSE, startdate, enddate, freq, mrv,  cache){
 
 
-  if (missing(cache)) cache <- istacr::cache
+  if (missing(cache)) cache <- istacbaser::cache
 
   # check table ----------
 
   cache_tables <- cache$ID
 
 
-  table_index <- istac_table %in% cache_tables
+  table_index <- istacbase_table %in% cache_tables
 
 
-  if (!table_index) stop("'istac_table' parameter has no valid values. Please check documentation for valid inputs.")
+  if (!table_index) stop("'istacbase_table' parameter has no valid values. Please check documentation for valid inputs.")
 
 
-  out <- istac_get(istac_table)
+  out <- istacbase_get(istacbase_table)
 
 
   # check label ---------
@@ -84,7 +84,7 @@ istac <- function(istac_table, islas = "all", label = TRUE, POSIXct = FALSE, sta
     vble_date <- names(out_df)[date_index]
 
     if (any(date_index)){
-      out_df <- istacperiodos2POSIXct(out_df, vble_date)
+      out_df <- istacbaseperiodos2POSIXct(out_df, vble_date)
       # Creo que la siguiente línea no es necesaria en nuestro caso.
       #if (missing(startdate) != missing(enddate)) stop("Using either startdate or enddate requires supplying both. Please provide both if a date range is wanted")
 
@@ -110,9 +110,9 @@ istac <- function(istac_table, islas = "all", label = TRUE, POSIXct = FALSE, sta
             startdate_db <-  min(out_df$fecha)
             startdate_mrv <- switch(periodo,
                                "anual" = enddate_db - lubridate::years(mrv-1),
-                               "semestral" = enddate_db - lubridate::months(6*mrv-1),
-                               "trimestral" = enddate_db - lubridate::months(4*mrv-1),
-                               "mensual" = enddate_db - lubridate::months(mrv-1),
+                               "semestral" = enddate_db - months(6*mrv-1),
+                               "trimestral" = enddate_db - months(4*mrv-1),
+                               "mensual" = enddate_db - months(mrv-1),
                                "quincenal" = enddate_db - lubridate::weeks(mrv*2-1),
                                "semanal" = enddate_db - lubridate::weeks(mrv-1))
 

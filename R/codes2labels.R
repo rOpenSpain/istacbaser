@@ -1,9 +1,9 @@
-#' Format data of \code{\link{istac_get}} return from codes to labels
+#' Format data of \code{\link{istacbase_get}} return from codes to labels
 #'
-#' change the data of dataframe returned by \code{\link{istac_get}}
+#' change the data of dataframe returned by \code{\link{istacbase_get}}
 #' from the code gived by th ISTAC API to the labels gived them.
 #'
-#' @param datos_lista a list given by \code{\link{istac_get}}
+#' @param datos_lista a list given by \code{\link{istacbase_get}}
 #' @param df a data frame with data in Code format.
 #'
 #' @return a data frame with the column names changed accordingly

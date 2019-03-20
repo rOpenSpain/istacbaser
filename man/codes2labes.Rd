@@ -2,12 +2,12 @@
 % Please edit documentation in R/codes2labels.R
 \name{codes2labes}
 \alias{codes2labes}
-\title{Format data of \code{\link{istac_get}} return from codes to labels}
+\title{Format data of \code{\link{istacbase_get}} return from codes to labels}
 \usage{
 codes2labes(datos_lista, df)
 }
 \arguments{
-\item{datos_lista}{a list given by \code{\link{istac_get}}}
+\item{datos_lista}{a list given by \code{\link{istacbase_get}}}
 
 \item{df}{a data frame with data in Code format.}
 }
@@ -15,6 +15,6 @@ codes2labes(datos_lista, df)
 a data frame with the column names changed accordingly
 }
 \description{
-change the data of dataframe returned by \code{\link{istac_get}}
+change the data of dataframe returned by \code{\link{istacbase_get}}
 from the code gived by th ISTAC API to the labels gived them.
 }
