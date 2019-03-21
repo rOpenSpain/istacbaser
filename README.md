@@ -452,7 +452,9 @@ pop_data <- istacbase(islas = "Canarias", istacbase_table = "dem.pob.exp.res.40"
 ggplot(pop_data, aes(x = fecha, y = valor, colour = Nacionalidades)) +
   geom_line(size = 1) +
   labs(title = "Población según sexos y nacionalidades. Islas de Canarias y años", x = "Fecha", y = "Habitantes") +
-  theme(legend.position="bottom") +
+  theme(legend.key=element_blank(), legend.key.size=unit(1,"point"),
+        legend.text=element_text(size=7), axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(colour=guide_legend(nrow=20)) +
   facet_wrap(~ Sexos)
 ```
 
