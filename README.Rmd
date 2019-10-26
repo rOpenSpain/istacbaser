@@ -12,6 +12,12 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
+
+
+
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/rOpenSpain/istacbaser/graphs/commit-activity)
+
 # Introduction
 
 

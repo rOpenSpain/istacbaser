@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/rOpenSpain/istacbaser/graphs/commit-activity)
+
 # Introduction
 
 The [Canary Islands Statistics Institute (Instituto Canario de
@@ -83,7 +85,7 @@ information. The structure of `cache` is as follows
 library(istacbaser)
 
 str(cache, max.level = 1)
-#> 'data.frame':    5257 obs. of  11 variables:
+#> 'data.frame':    5404 obs. of  11 variables:
 #>  $ tema              : chr  "Territorio y medio ambiente" "Territorio y medio ambiente" "Territorio y medio ambiente" "Territorio y medio ambiente" ...
 #>  $ subtemaI          : chr  "Territorio y usos del suelo" "Territorio y usos del suelo" "Territorio y usos del suelo" "Territorio y usos del suelo" ...
 #>  $ subtemaII         : chr  "Estadística del Territorio" "Estadística del Territorio" "Estadística del Territorio" "Estadística del Territorio" ...
@@ -101,8 +103,7 @@ str(cache, max.level = 1)
 
 `istacbase_search()` searches through the `cache` data frame to find
 indicators that match a search pattern. An example of the structure of
-this data frame is
-below
+this data frame is below
 
 |      | tema     | subtemaI | subtemaII                           | datos publicadosI | datos publicadosII   | apijson                                                                                                                        | lista\_tablas | titulo                                                                                             | origen                                                                         | encuesta                      | ID                   |
 | ---- | :------- | :------- | :---------------------------------- | :---------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- | :------------ | :------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- | :---------------------------- | :------------------- |
