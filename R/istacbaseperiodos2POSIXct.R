@@ -102,7 +102,7 @@ istacbaseperiodos2POSIXct <- function(df, date_col) {
       quarterly_posix_values <- lubridate::floor_date(quarterly_posix, unit = "quarter")
 
       df$fecha[quarterly_obs_index] <- quarterly_posix_values
-      df$periodicidad[quarterly_obs_index] <- "cuatrimestral"
+      df$periodicidad[quarterly_obs_index] <- "trimestral"
 
     }
 
