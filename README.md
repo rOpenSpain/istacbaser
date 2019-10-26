@@ -10,8 +10,6 @@ contributors](https://img.shields.io/github/contributors/rOpenSpain/istacbaser.s
 version](https://badge.fury.io/gh/rOpenSpain%2Fistacbaser.svg)](https://github.com/rOpenSpain/istacbaser)
 [![Tidyverse
 lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://github.com/rOpenSpain/istacbaser)
-[![ForTheBadge
-built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/rOpenSpain/istacbaser)
 
 # Introduction
 
@@ -558,3 +556,8 @@ head(soc_data)
 #> 5                 TOTAL Lanzarote Menos de 6 meses  2017M06  1196
 #> 6                 TOTAL Lanzarote   Más de 6 meses  2017M06   555
 ```
+
+[![ForTheBadge
+built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/rOpenSpain/istacbaser)
+by [Christian González-Martel](https://github.com/chrglez) & [José
+Manuel Cazorla Artiles](https://github.com/jmcartiles)
