@@ -4,7 +4,7 @@ library(tidyr)
 library(jsonlite)
 library(dplyr)
 
-metadata <- read_xlsx("Metadatos_Istac.xlsx")
+metadata <- read_xlsx("data-raw/Metadatos_Istac.xlsx")
 
 if (!all(is.na(metadata$error))) metadata <- metadata[!(!is.na(metadata$error) & metadata$error == "ERROR"), ]
 
@@ -37,9 +37,9 @@ names(df) <- c("titulo","origen","encuesta")
 
 
 
-cache <- cbind(metadata[tablasok, -6],df)
+cache2 <- cbind(metadata[tablasok, -6],df)
 
-save(cache, file = "cache.Rdata")
+save(cache, file = "data/cache.Rdata")
 
 
 ####
