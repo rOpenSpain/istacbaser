@@ -96,9 +96,11 @@ istacbaseperiodos2POSIXct <- function(df, date_col) {
       qtr_df <- as.data.frame(matrix(unlist(qtr_obs), ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
       names(qtr_df) <- c("year", "qtr")
       qtr_df$month <- as.numeric(qtr_df$qtr) * 3 # to turn into the max month
-      qtr_format_vec <- paste0(qtr_df$year, "01", qtr_df$month) # 01 acts as a dummy day
+      #qtr_format_vec <- paste0(qtr_df$year, "01", qtr_df$month) # 01 acts as a dummy day
+      qtr_format_vec <- paste0(qtr_df$year,"-", qtr_df$month, "-01")
 
-      quarterly_posix <- lubridate::ydm(qtr_format_vec)
+      #quarterly_posix <- lubridate::ydm(qtr_format_vec)
+      quarterly_posix <- lubridate::ymd(qtr_format_vec)
       quarterly_posix_values <- lubridate::floor_date(quarterly_posix, unit = "quarter")
 
       df$fecha[quarterly_obs_index] <- quarterly_posix_values
