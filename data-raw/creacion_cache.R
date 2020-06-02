@@ -5,6 +5,7 @@ library(jsonlite)
 library(dplyr)
 
 metadata <- read_xlsx("data-raw/Metadatos_Istac.xlsx")
+#metadata <- read_xlsx("data-raw/restantes.xlsx")
 
 if (!all(is.na(metadata$error))) metadata <- metadata[!(!is.na(metadata$error) & metadata$error == "ERROR"), ]
 
@@ -16,7 +17,7 @@ columna <- apply(metadata[,1:4],2,substr,1,3) %>%
   as.data.frame(stringsAsFactors = FALSE) %>%
   setNames(paste0("v",1:4)) %>%
   mutate(id = row_number()) %>%
-  apply(1,paste0,collapse=".") %>%
+  apply(1,paste0,collapse = ".") %>%
   tolower() %>%
   gsub(" ","",.)
 
