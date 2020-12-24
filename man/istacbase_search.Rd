@@ -4,8 +4,13 @@
 \alias{istacbase_search}
 \title{Search information about data available through ISTACBASE API}
 \usage{
-istacbase_search(pattern, fields = "titulo", extra = TRUE,
-  exact = FALSE, cache)
+istacbase_search(
+  pattern,
+  fields = "titulo",
+  extra = TRUE,
+  exact = FALSE,
+  cache
+)
 }
 \arguments{
 \item{pattern}{Character string or regular expression to be matched.}

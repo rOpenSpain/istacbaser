@@ -4,8 +4,17 @@
 \alias{istacbase}
 \title{Download data from the ISTACBASE API}
 \usage{
-istacbase(istacbase_table, islas = "all", label = TRUE,
-  POSIXct = FALSE, startdate, enddate, freq, mrv, cache)
+istacbase(
+  istacbase_table,
+  islas = "all",
+  label = TRUE,
+  POSIXct = FALSE,
+  startdate,
+  enddate,
+  freq,
+  mrv,
+  cache
+)
 }
 \arguments{
 \item{istacbase_table}{Character string with the \code{ID} of the table requested.
@@ -57,7 +66,7 @@ istacbase("soc.cal.enc.res.3637")
 istacbase("soc.cal.enc.res.3637", POSIXct = TRUE, startdate = 2010, enddate = 2015)
 
 
-# query using \\code{islas} filter
+# query using \code{islas} filter
 # PoblaciÃ³n segÃºn sexos y edades aÃ±o a aÃ±o. Islas de Canarias y aÃ±os.
 istacbase("dem.pob.exp.res.35", islas = "Fuerteventura")
 

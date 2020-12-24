@@ -21,6 +21,6 @@ format and return a list with data in json format and a formatted data frame.
 # To be used inside of \code{\link{istacbase}}
 }
 \examples{
-# Percentiles de renta disponible (año anterior al de la entrevista) por hogar en Canarias y años.
+# Percentiles de renta disponible (aÃ±o anterior al de la entrevista) por hogar en Canarias y aÃ±os.
 istacbase_get("soc.cal.enc.res.3637")
 }
