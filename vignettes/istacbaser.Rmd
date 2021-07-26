@@ -13,7 +13,7 @@ vignette: >
 # Introduction
 
 
-The Canary Islands Statistics Institute (Instituto Canario de Estadítica, istacbase)^[<http://www.gobiernodecanarias.org/istacbase/>] is the central organ of the autonomous statistical system and official research center of the Government of the Canary Islands, created and regulated by Law 1/1991 of 28 January, Statistics of the Autonomous Community of the Canary Islands (CAC), and among others, assigns the following functions:
+The Canary Islands Statistics Institute (Instituto Canario de Estadística, istacbase)^[<http://www.gobiernodecanarias.org/istacbase/>] is the central organ of the autonomous statistical system and official research center of the Government of the Canary Islands, created and regulated by Law 1/1991 of 28 January, Statistics of the Autonomous Community of the Canary Islands (CAC), and among others, assigns the following functions:
 
 * Providing statistical information: The istacbase has among its objectives to provide, with technical and professional independence, statistical information of interest to the CAC, taking into account the fragmentation of the territory and its singularities and complying with the principles established in the Code of Good Practices of the European Statistics.
 
