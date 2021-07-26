@@ -4,7 +4,8 @@
 \name{cache}
 \alias{cache}
 \title{Cached information from the ISTAC API}
-\format{A data frame with 5257 rows and 11 variables:
+\format{
+A data frame with 5257 rows and 11 variables:
 
 \describe{
   \item{tema}{Main topic}
@@ -19,7 +20,8 @@
   \item{encuesta}{Survey title}
   \item{ID}{Identificator}
   ...
-}}
+}
+}
 \usage{
 cache
 }

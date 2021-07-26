@@ -1,21 +1,30 @@
-Package: istacbaser
 Type: Package
+Package: istacbaser
 Title: Programmatic Access to Data from the ISTAC API
-Description: Functions for searching and downloading data and statistics from
-  the ISTAC API (<http://www.gobiernodecanarias.org/istac/>).
 Version: 0.0.0.9000
-Authors@R: c(
-    person("Cazorla-Artiles", "José Manuel", email = "Jmcartiles@gmail.com", role = "aut"),
-    person("González-Martel", "Christian", email = "christian.gonzalez@ulpgc.es", role = c("aut","cre")))
-URL: https://github.com/chrglez/istacr
-BugReports: https://github.com/chrglez/istacr/issues
+Authors@R: 
+    c(person(given = "Cazorla-Artiles",
+             family = "José Manuel",
+             role = "aut",
+             email = "Jmcartiles@gmail.com"),
+      person(given = "González-Martel",
+             family = "Christian",
+             role = c("aut", "cre"),
+             email = "christian.gonzalez@ulpgc.es"))
+Description: Functions for searching and downloading data and statistics
+    from the ISTAC API (<http://www.gobiernodecanarias.org/istac/>).
 License: MIT + file LICENSE
+URL: https://github.com/rOpenSpain/istacbaser
+BugReports: https://github.com/rOpenSpain/istacbaser/issues
+Imports: 
+    jsonlite,
+    lubridate (>= 1.5.0)
+Suggests: 
+    ggplot2,
+    knitr,
+    rmarkdown
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 LazyData: true
-Imports: jsonlite,
-	lubridate (>= 1.5.0)
-RoxygenNote: 6.1.0
-Suggests: knitr,
-    rmarkdown,
-    ggplot2
-VignetteBuilder: knitr
+RoxygenNote: 7.1.1
